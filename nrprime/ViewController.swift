@@ -9,17 +9,45 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    
+    func checkPrimeWith(value number: Int) -> Bool {
+        if number <= 1 {
+            return false
+        }
+        
+        if number <= 3 {
+            return true
+        }
+        
+        //for (i = 2; i <= n/2; i++)
+        for i in 2...(number/2) {
+            if number % i == 0 {
+                return false
+            }
+        }
+        
+        return true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBOutlet weak var statusLabel: UILabel!
+    
+    @IBOutlet weak var textField: UITextField!
+    
+    @IBAction func onTap(_ sender: UIButton) {
+        if let n = textField.text {
+            if let number: Int = Int(n) {
+                if checkPrimeWith(value: number){
+                    statusLabel.text = "Prim"
+                }
+                else {
+                    statusLabel.text = "Neprim"
+                }
+                
+            }
+            else {
+                statusLabel.text = "Nu este numar"
+            }
+        }
     }
-
-
 }
 
