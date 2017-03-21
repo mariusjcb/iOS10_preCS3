@@ -20,7 +20,7 @@ class NrPrim {
         case numberIsNil
         case negativeValue
         case zeroValue
-        case outOfRange
+        case tooBig
     }
     
     func check(withClosure completionHandler: (Bool?, CheckErrors?) -> Void) {
@@ -31,7 +31,7 @@ class NrPrim {
             case let x where x < 0: return completionHandler(nil, .negativeValue)
             case let x where x <= 1: return completionHandler(false, nil)
             case let x where x <= 3: return completionHandler(true, nil)
-            case let x where x > 1000000: return completionHandler(nil, .outOfRange)
+            case let x where x > 1000000: return completionHandler(nil, .tooBig)
             default: break
             }
             
@@ -65,7 +65,7 @@ class VerificarePrim: NrPrim {
         static let isPrime = "Numar PRIM"
         static let isNotPrime = "Numar NEPRIM"
         static let isZero = "Ai introdus ZERO"
-        static let isBigNumber = "Numar PREA MARE"
+        static let isTooBig = "Numarul este PREA MARE"
     }
     
     override var value: Int? {
@@ -86,8 +86,8 @@ class VerificarePrim: NrPrim {
                         self._statusMesssage = StatusMessages.isNotNumber
                     case .zeroValue:
                         self._statusMesssage = StatusMessages.isZero
-                    case .outOfRange:
-                        self._statusMesssage = StatusMessages.isBigNumber
+                    case .tooBig:
+                        self._statusMesssage = StatusMessages.isTooBig
                     }
                 } else if status != nil {
                     switch status! {
