@@ -8,25 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, VerificarePrimDelegate {
+    var calculatorBrain = VerificarePrim()
     
-    func checkPrimeWith(value number: Int) -> Bool {
-        if number <= 1 {
-            return false
-        }
-        
-        if number <= 3 {
-            return true
-        }
-        
-        //for (i = 2; i <= n/2; i++)
-        for i in 2...(number/2) {
-            if number % i == 0 {
-                return false
-            }
-        }
-        
-        return true
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        calculatorBrain.delegate = self
     }
     
     @IBOutlet weak var statusLabel: UILabel!
@@ -35,19 +22,26 @@ class ViewController: UIViewController {
     
     @IBAction func onTap(_ sender: UIButton) {
         if let n = textField.text {
-            if let number: Int = Int(n) {
-                if checkPrimeWith(value: number){
-                    statusLabel.text = "Prim"
-                }
-                else {
-                    statusLabel.text = "Neprim"
-                }
-                
-            }
-            else {
-                statusLabel.text = "Nu este numar"
-            }
+            calculatorBrain.value = Int(n)
         }
+    }
+    
+    func updateUI() {
+        if calculatorBrain.status != nil {
+            textField.text = String(describing: calculatorBrain.value!)
+        }
+        else {
+            textField.text = nil
+        }
+        
+        statusLabel.text = calculatorBrain.statusMessage
+    }
+    
+    //MARK: VerificarePrimDelegate
+    
+    func statusDidChange(_ sender: VerificarePrim) {
+        print("statusDidChange a fost apelat")
+        updateUI()
     }
 }
 
