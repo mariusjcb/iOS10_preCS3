@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, VerificarePrimDelegate {
+class ViewController: UIViewController, NrPrimDelegate {
     var calculatorBrain = VerificarePrim()
     
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ class ViewController: UIViewController, VerificarePrimDelegate {
     
     //MARK: VerificarePrimDelegate
     
-    func statusDidChange(_ sender: VerificarePrim) {
+    func valueDidChange() {
         print("statusDidChange a fost apelat")
         updateUI()
     }

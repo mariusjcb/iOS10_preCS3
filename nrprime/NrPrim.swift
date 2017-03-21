@@ -1,4 +1,10 @@
+protocol NrPrimDelegate {
+    func valueDidChange()
+}
+
 class NrPrim {
+    var delegate: NrPrimDelegate?
+    
     private var _value: Int?
     var value: Int? {
         get {
@@ -6,6 +12,7 @@ class NrPrim {
         }
         set(newValue) {
             self._value = newValue
+            self.delegate?.valueDidChange()
         }
     }
     
@@ -42,8 +49,6 @@ class NrPrim {
 }
 
 class VerificarePrim: NrPrim {
-    var delegate: VerificarePrimDelegate?
-    
     private var _status: Bool?
     var status: Bool? {
         return self._status
@@ -93,12 +98,6 @@ class VerificarePrim: NrPrim {
                     }
                 }
             }
-            
-            self.delegate?.statusDidChange(self)
         }
     }
-}
-
-protocol VerificarePrimDelegate {
-    func statusDidChange(_ sender: VerificarePrim)
 }
